@@ -19,10 +19,10 @@ const Header: React.FC<Props> = ({ words, interval }) => {
   }, [currentWordIndex, interval, words])
 
   return (
-    <h1>
+    <h1 style={{textAlign: "right"}}>
       {words.map((word, index) => (
         <span key={word} style={{ display: index === currentWordIndex ? 'inline' : 'none' }}>
-          Give me tattoo ideas in the style of <span style={{color: "red", textDecoration: "line-through"}}>{word}</span>
+          Generate tattoo ideas in the style of <span style={{color: "red", textDecoration: "line-through"}}>{word}</span>
         </span>
       ))}
     </h1>

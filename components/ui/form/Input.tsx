@@ -5,12 +5,14 @@ interface InputProps {
   name: string;
   label: string;
   value: string;
+  error: string,
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPress?: (event: any) => void;  
   w?: number,
+  placeholder?: string
 }
 
-const CustomInput: React.FC<InputProps> = ({ name, label, value, onChange, onPress, w }) => {
+const CustomInput: React.FC<InputProps> = ({ name, label, value, error, onChange, onPress, w, placeholder}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -34,7 +36,11 @@ const CustomInput: React.FC<InputProps> = ({ name, label, value, onChange, onPre
             onChange={onChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            placeholder={placeholder}
         />
+        <span style={{padding: "0 1rem 0px 1rem"}}>
+            {error}
+        </span>
     </div>
   );
 };

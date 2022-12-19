@@ -50,8 +50,7 @@ export const Layout: FunctionComponent<Props> = (props) => {
                     display:  "", //window?.innerWidth > 720 ?  "flex" : openState ?   "none" : "",
                     height: "auto"
                 }}>
-                <div 
-                    style={{justifyContent: "space-between"}}className={`${styles.col} ${styles.full} `}>
+                <div style={{justifyContent: "space-between"}}className={`${styles.col} ${styles.full} `}>
                     {props.children}
                 </div>
                 {/* <footer  className={`${styles.row} ${styles.footer}`}>`

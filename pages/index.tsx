@@ -17,9 +17,9 @@ export default function Home() {
     adj: string,
     adjectives_list: string[]
   }>({
-    topic: "",
+    topic: "Tiger in a forest",
     adj: "",
-    adjectives_list: []
+    adjectives_list: ["Vibrant Colors"]
   });
   const [selectedOption, setSelectedOption] = useState('American Traditional');
 
@@ -108,12 +108,6 @@ export default function Home() {
       </Head>
       <main className={`${main.full} `}>
 
-        <div className={`${main.full}`} style={{textAlign: "center"}}>
-          <p>
-            Use the form to print tattoo inspiration 🖌
-          </p>
-        </div>
-
         <div className={`${main.full}`}>
 
           <div className={`${main.container}`} style={{height: "200px"}}>
@@ -121,6 +115,11 @@ export default function Home() {
           </div>
 
           <div className={`${main.full} ${main.col}`}>
+            <div className={`${main.full}`} style={{textAlign: "center"}}>
+              <p>
+                Use the form to<br/> print tattoo inspiration 🖌
+              </p>
+            </div>
 
             <div className={`${main.full} ${main.col}  ${main.container}`}>
 
@@ -142,19 +141,22 @@ export default function Home() {
                   topic: e.target.value
                 })}
                 w={100}
+                error={""}
               />  
 
               <CustomInput 
+                error={""}
                 name="adj"
                 label="Adjectives details"
                 value={tattoo?.adj}
                 onPress={handleEnter}
                 onChange={handleEnter}
+                placeholder={"Hit 'Enter' to add keys."}
               />
               <div className={`${main.full} ${main.row}`}>
                 {
                   tattoo?.adjectives_list && tattoo?.adjectives_list.length > 0 ? 
-                    <p className={`${main.full}`}>
+                    <p className={`${main.full}`} style={{padding: "0 1rem 1rem 1rem"}}>
                       {
                         tattoo?.adjectives_list.join(", ") 
                       }

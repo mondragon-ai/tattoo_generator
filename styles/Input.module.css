@@ -6,8 +6,8 @@
   }
   
   .inputs {
-    width: 20rem;
     height: 2.5rem;
+    background-color: black;
     border: none;
     border-bottom: 0.1rem solid #ccc;
     border-radius: "30px";
