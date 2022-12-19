@@ -19,10 +19,9 @@ export const Layout: FunctionComponent<Props> = (props) => {
     
     return (
         <div style={{
-            minHeight: "100vh",
+            minHeight: "",
             width: "100vw",
-            background: "var(--darkBackground)",
-            height: "auto"
+            background: "white",
         }} className={`${styles.row} ${styles.full} `}>
             <div
                 style={{

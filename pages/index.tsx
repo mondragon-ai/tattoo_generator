@@ -19,7 +19,7 @@ export default function Home() {
   }>({
     topic: "Tiger in a forest",
     adj: "",
-    adjectives_list: ["Vibrant Colors"]
+    adjectives_list: []
   });
   const [selectedOption, setSelectedOption] = useState('American Traditional');
 
@@ -172,9 +172,7 @@ export default function Home() {
         </div>
 
         <div className={`${main.full}`}>
-          <div className={`${main.full}`}>
-            <MosaicGrid images={images} columns={2} />
-          </div>
+          <MosaicGrid images={images} columns={2} />
         </div>
       </main>
     </>
