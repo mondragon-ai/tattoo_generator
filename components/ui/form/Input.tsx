@@ -15,12 +15,12 @@ interface InputProps {
 const CustomInput: React.FC<InputProps> = ({ name, label, value, error, onChange, onPress, w, placeholder}) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  const handleFocus = () => {
-    setIsFocused(true);
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    event.target.style.fontSize = '16px';
   };
 
-  const handleBlur = () => {
-    setIsFocused(false);
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    event.target.style.fontSize = 'inherit';
   };
 
   return (
