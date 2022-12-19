@@ -1,0 +1,70 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.rowCenter {
+    justify-content: center;
+    align-items: center;
+}
+
+.colCenter {
+    justify-content: center;
+    align-items: center;
+}
+
+.rowReverse {
+    flex-direction: row-reverse;
+}
+
+.colReverse {
+    flex-direction: column-reverse;
+}
+
+.container {
+    padding: 1rem;
+}
+
+.full {
+    width: 100%;
+}
+
+.select {
+    border-radius: 5px;
+    background-color: rgb(255, 127, 105);
+    border: 0.5px solid white;
+    color: black;
+}
+
+.paddingY {
+    padding: 1rem 0;
+}
+
+.inputs {
+    height: 2.5rem;
+    padding: 0 15px;
+    border: none;
+    border-bottom: 0rem solid #ccc;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    outline: none;
+    transition: border-bottom-color 0.2s;
+}
+
+
+.button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    outline: none;
+}

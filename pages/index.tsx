@@ -1,11 +1,101 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+import main from '../styles/Main.module.css';
+import CustomInput from '../components/ui/form/Input'
+import { use, useState } from 'react'
+import Header from '../components/ui/text/RotatingHeader';
+import CustomSelect from '../components/ui/form/Select';
+import MosaicGrid from '../components/ui/mosaic';
+import Button from '../components/ui/Button';
+import { impoweredRequest } from '../lib/requests';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const tattoos = ['American Traditional', 'Blackwork', 'Celtic', 'Chicano', 'Dotwork', 'Japanese', 'Neo-Traditional', 'Realistic', 'Script', 'Watercolor'];
+  const [tattoo, setTattoo] = useState<{
+    topic: string,
+    adj: string,
+    adjectives_list: string[]
+  }>({
+    topic: "",
+    adj: "",
+    adjectives_list: []
+  });
+  const [selectedOption, setSelectedOption] = useState('American Traditional');
+
+  const adj_key = tattoo.adjectives_list.length > 0 ? " with these adjetives" + tattoo.adjectives_list.join(", ") : ""
+
+  const [images, setImages] = useState([
+    "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-Q8nHB6D7F0eaq3zBeBd7pqSh.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=ynTR%2B53tkgDRx%2BvmFf%2BEunKd8l1G2LsqQ7gdKW%2Blwek%3D",
+    "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-U8gPiit4vsWxCtRpp7h1kVoX.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=JZ6Cov/DlPXKR0u0B4mZFiRCs6NEZrHXD8CeBml2iJ8%3D",
+    "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-qm20w5xyfXpPsuZvbSIoWD5L.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=a6tITmx5HNByZloaAb7XVI3RTIyH%2B9y/C/BWpjrqky4%3D",
+    "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-NVGEj7QPhG9HMeBVTgr8E8UC.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=w/akfWMSslMLbGb/Dh8WWBJP3wbriwzRsSdSDsRfZAk%3D"
+  ]);
+
+  const dalleHeaders = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + process.env.NEXT_PUBLIC_OPEN_API_KEY
+}
+  const handleClick = async () => {
+
+    console.log(tattoo);
+    console.log(selectedOption);
+    console.log(tattoo.topic);
+    console.log(adj_key);
+
+    const response = await impoweredRequest("https://api.openai.com/v1/images/generations","POST", dalleHeaders, {
+      "prompt": "Generate a " + selectedOption + " style tattoo about " + tattoo.topic + adj_key,
+      "n": 4,
+      "size": "256x256"
+    });
+    
+    if (response) {
+      const list = response?.data as [];
+      let img_list: string[] = [];
+
+
+      list.forEach((i: {url: string}) => {
+        img_list = [
+          ...img_list,
+          i.url
+        ]
+      })
+      setImages(img_list)
+    }
+
+
+  };
+
+  const handleEnter = (e: any) => {
+    const key = e.key;
+
+    setTattoo({
+      ...tattoo,
+      adj: e.target.value
+    });
+
+    if (key == "Enter") {
+      switch (e.target.name) {
+        case "adj":
+          console.log("ADJ ACTIVATED")
+          setTattoo({
+            ...tattoo,
+            adj: "",
+            adjectives_list: [
+              ...tattoo.adjectives_list,
+              e.target.value
+            ]
+          })
+          break;
+      
+        default:
+          break;
+      }
+    }
+  }
+
   return (
     <>
       <Head>
@@ -14,108 +104,73 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
+      <main className={`${main.full} `}>
+
+        <div className={`${main.full}`} style={{textAlign: "center"}}>
           <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
+            Use the form to print tattoo inspiration 🖌
           </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
+        </div>
+
+        <div className={`${main.full}`}>
+
+          <div className={`${main.container}`} style={{height: "200px"}}>
+            <Header words={tattoos} interval={1000} />
+          </div>
+
+          <div className={`${main.full} ${main.col}`}>
+
+            <div className={`${main.full} ${main.col}  ${main.container}`}>
+
+              <CustomSelect
+                name="tatto_style"
+                label="Tatto Style"
+                options={tattoos}
+                value={selectedOption}
+                onChange={setSelectedOption}
+                w={100}
               />
-            </a>
+
+              <CustomInput 
+                name="topic"
+                label="Short topic description"
+                value={tattoo?.topic}
+                onChange={(e) => setTattoo({
+                  ...tattoo,
+                  topic: e.target.value
+                })}
+                w={100}
+              />  
+
+              <CustomInput 
+                name="adj"
+                label="Adjectives details"
+                value={tattoo?.adj}
+                onPress={handleEnter}
+                onChange={handleEnter}
+              />
+              <div className={`${main.full} ${main.row}`}>
+                {
+                  tattoo?.adjectives_list && tattoo?.adjectives_list.length > 0 ? 
+                    <p className={`${main.full}`}>
+                      {
+                        tattoo?.adjectives_list.join(", ") 
+                      }
+                    </p> : null
+                }
+              </div>
+              <div className={`${main.full} ${main.row} ${main.rowCenter}`}>
+                <Button onClick={handleClick}>Generate Ideas 📸</Button>
+              </div>
+            </div>
           </div>
+
         </div>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
+        <div className={`${main.full}`}>
+          <div className={`${main.full}`}>
+            <MosaicGrid images={images} columns={2} />
           </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
         </div>
       </main>
     </>
