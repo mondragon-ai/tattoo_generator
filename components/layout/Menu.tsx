@@ -1,22 +1,22 @@
 import styles from "../../styles/Main.module.css";
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import {
-    faGauge,
-    faMagnifyingGlassChart,
-    faUsers,
-    faBasketShopping,
-    faPercent,
-    faMoneyBillTransfer,
-    faTruckFast,
-    faSliders,
-    faArrowRightFromBracket,
-    faPersonThroughWindow
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import {
+//     faGauge,
+//     faMagnifyingGlassChart,
+//     faUsers,
+//     faBasketShopping,
+//     faPercent,
+//     faMoneyBillTransfer,
+//     faTruckFast,
+//     faSliders,
+//     faArrowRightFromBracket,
+//     faPersonThroughWindow
+// } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import Underline from "../ui/Underline";
-import { Dispatch, FC, FunctionComponent, MouseEvent, SetStateAction, useState } from "react";
+import { Dispatch, FC, FunctionComponent, MouseEvent, SetStateAction } from "react";
 // import { auth } from "../../lib/firebase";
 // import { signOut } from "firebase/auth";
 
@@ -63,7 +63,7 @@ export const Menu: FunctionComponent<Props> = ({openState, toggleMenu}) => {
                     <div 
                         onClick={(e) => toggleMenu(!openState)}
                         className={`${styles.row} ${styles.mobileExit}`}>
-                        <div><FontAwesomeIcon icon={faArrowRightFromBracket} /></div>
+                        {/* <div><FontAwesomeIcon icon={faArrowRightFromBracket} /></div> */}
                     </div>
                 </div>
                     {/* <Underline width={40} /> */}
