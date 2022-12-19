@@ -10,8 +10,6 @@ import MosaicGrid from '../components/ui/mosaic';
 import Button from '../components/ui/Button';
 import { impoweredRequest } from '../lib/requests';
 
-const inter = Inter({ subsets: ['latin'] })
-
 export default function Home() {
   const tattoos = ['American Traditional', 'Blackwork', 'Celtic', 'Chicano', 'Dotwork', 'Japanese', 'Neo-Traditional', 'Realistic', 'Script', 'Watercolor'];
   const [tattoo, setTattoo] = useState<{
@@ -34,11 +32,14 @@ export default function Home() {
     "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-NVGEj7QPhG9HMeBVTgr8E8UC.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=w/akfWMSslMLbGb/Dh8WWBJP3wbriwzRsSdSDsRfZAk%3D"
   ]);
 
+  let [isLoading, setLoading] = useState(false);
+
   const dalleHeaders = {
     "Content-Type": "application/json",
     "Authorization": "Bearer " + process.env.NEXT_PUBLIC_OPEN_API_KEY
 }
   const handleClick = async () => {
+    setLoading(true);
 
     console.log(tattoo);
     console.log(selectedOption);
@@ -63,6 +64,7 @@ export default function Home() {
         ]
       })
       setImages(img_list)
+      setLoading(false);
     }
 
 
@@ -160,7 +162,7 @@ export default function Home() {
                 }
               </div>
               <div className={`${main.full} ${main.row} ${main.rowCenter}`}>
-                <Button onClick={handleClick}>Generate Ideas 📸</Button>
+                <Button onClick={handleClick}>{!isLoading ? "Generate Ideas 📸" : "Loading . . "}</Button>
               </div>
             </div>
           </div>

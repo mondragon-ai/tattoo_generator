@@ -27,6 +27,7 @@ export const impoweredRequest = async (
             result = await response.json();
         } else {
             result = {message: "Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system."}
+            alert("ERROR: " + response.status)
             throw new Error(" - Fetch Error");
         }
     }
