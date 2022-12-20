@@ -24,8 +24,8 @@ const CustomInput: React.FC<InputProps> = ({ name, label, value, error, onChange
   };
 
   return (
-    <div style={{width: `${w}%`}} className={`${main.full} ${main.paddingY}`}>
-        <label style={{padding: "0 1rem 0px 1rem"}} htmlFor={name}>
+    <div style={{width: `${w}%`}} className={`${main.full} ${main.paddingY} ${main.col}`}>
+        <label style={{padding: "0.5rem 1rem",}} htmlFor={name}>
             {label}
         </label>
         <input

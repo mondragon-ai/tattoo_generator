@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import styles from '../../../styles/Main.module.css';
 
 interface Props {
   words: string[]
@@ -19,10 +20,10 @@ const Header: React.FC<Props> = ({ words, interval }) => {
   }, [currentWordIndex, interval, words])
 
   return (
-    <h1 style={{textAlign: "right"}}>
+    <h1 style={{textAlign: "left", zIndex: "100"}} className={`${styles.full}`}>
       {words.map((word, index) => (
-        <span key={word} style={{ display: index === currentWordIndex ? 'inline' : 'none' }}>
-          Generate tattoo ideas in the style of <span style={{color: "red", textDecoration: "line-through"}}>{word}</span>
+        <span key={word} className={`${styles.full}`} style={{ display: index === currentWordIndex ? 'inline' : 'none' }}>
+          Generate tattoo <br />ideas in the style of <br /><span style={{color: "#e64343", textDecoration: "line-through", fontSize: "3rem"}}>{word}</span>
         </span>
       ))}
     </h1>

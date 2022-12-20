@@ -106,22 +106,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${main.full} `}>
+      <main className={`${main.container} ${main.full} ${main.col} `}>
 
-        <div className={`${main.full}`}>
+        <div className={`${main.full} ${main.col}`}>
 
-          <div className={`${main.container}`} style={{height: "200px"}}>
+          <div className={``} style={{height: "200px"}}>
             <Header words={tattoos} interval={1000} />
           </div>
 
           <div className={`${main.full} ${main.col}`}>
-            <div className={`${main.full}`} style={{textAlign: "center"}}>
-              <p>
-                Use the form to<br/> print tattoo inspiration 🖌
-              </p>
-            </div>
 
-            <div className={`${main.full} ${main.col}  ${main.container}`}>
+            <div className={`${main.full} ${main.col}`}>
 
               <CustomSelect
                 name="tatto_style"
@@ -144,7 +139,7 @@ export default function Home() {
                 error={""}
               />  
 
-              <CustomInput 
+              {/* <CustomInput 
                 error={""}
                 name="adj"
                 label="Adjectives details"
@@ -162,17 +157,22 @@ export default function Home() {
                       }
                     </p> : null
                 }
-              </div>
+              </div> */}
               <div className={`${main.full} ${main.row} ${main.rowCenter}`}>
                 <Button onClick={handleClick}>{!isLoading ? "Generate Ideas 📸" : "Loading . . "}</Button>
               </div>
             </div>
           </div>
 
-        </div>
+          <div className={`${main.full} ${main.col}`}  style={{paddingTop: "3rem"}}>
+            <MosaicGrid images={images} columns={2} />
+            <div className={`${main.full}`} style={{textAlign: "left"}}>
+              <p className={`${main.full}`}>
+                <span style={{color: "#e64343"}}>Japanese</span> style with short description of <span style={{color: "#e64343"}}>walking through forest</span> 
+              </p>
+            </div>
+          </div>
 
-        <div className={`${main.full}`}>
-          <MosaicGrid images={images} columns={2} />
         </div>
       </main>
     </>

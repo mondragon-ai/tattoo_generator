@@ -21,7 +21,7 @@ export const Layout: FunctionComponent<Props> = (props) => {
         <div style={{
             minHeight: "",
             width: "100vw",
-            background: "rgb(18, 18, 18)",
+            background: "rgb(41 41 41)",
         }} className={`${styles.row} ${styles.full} `}>
             <div
                 style={{
