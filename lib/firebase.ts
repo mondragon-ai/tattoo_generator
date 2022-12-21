@@ -1,4 +1,4 @@
-import * as admin from "firebase-admin";
+// import * as admin from "firebase-admin";
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 // import { getFirestore } from "firebase/firestore";
@@ -8,17 +8,17 @@ import { getStorage } from "firebase/storage";
 
 import serviceAccount from "../impowered-funnel-d95202c2d478.json";
 
-admin.initializeApp({
-  credential: (admin as any).cert(serviceAccount)
-});
+// admin.initializeApp({
+//   credential: (admin as any).cert(serviceAccount)
+// });
 
-// const db = getFirestore();
+// // const db = getFirestore();
 
-const firestoreDB: FirebaseFirestore.Firestore = admin.firestore();
+// const firestoreDB: FirebaseFirestore.Firestore = admin.firestore();
 
-firestoreDB.settings({
-    timestampInSnapshot: true
-})
+// firestoreDB.settings({
+//     timestampInSnapshot: true
+// })
 
 // TODO: Replace the following with your app's Firebase project configuration
 // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
@@ -34,7 +34,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const db = firestoreDB;
+// export const db = firestoreDB;
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(app);
