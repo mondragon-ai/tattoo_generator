@@ -28,6 +28,7 @@ import Header from "../components/ui/text/RotatingHeader";
 import CustomInput from "../components/ui/form/Input";
 import Button from "../components/ui/Button";
 import RotatingImage from "../components/ui/images/RotatingImage";
+import { impoweredRequest } from "../lib/requests";
 
 
 // const auth = getAuth();
@@ -189,6 +190,13 @@ export default function Enter() {
                 console.log("  [IS ANON]: " +  u.isAnonymous);
                 setLoading(false);
                 toggleState(false);
+
+                const response = await impoweredRequest("",
+                "POST", {
+
+                },{
+
+                })
             })
             .catch((er) => {
                 // Update states

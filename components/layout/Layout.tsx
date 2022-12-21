@@ -1,6 +1,7 @@
 import React, { FunctionComponent, ReactNode, useEffect, useState } from "react";
 import styles from "../../styles/Main.module.css";
 import useWindowWidth from "../tools/window";
+import { TopBar } from "./TopBar";
 // import Menu from "./Menu";
 
 
@@ -50,6 +51,7 @@ export const Layout: FunctionComponent<Props> = (props) => {
                     height: "auto"
                 }}>
                 <div style={{justifyContent: "space-between"}}className={`${styles.col} ${styles.full} `}>
+                    <TopBar openState={openState} toggleMenu={toggleMenu} state={false} />
                     {props.children}
                 </div>
                 {/* <footer  className={`${styles.row} ${styles.footer}`}>`

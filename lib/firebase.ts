@@ -1,10 +1,28 @@
-// Import the functions you need from the SDKs you need
+import * as admin from "firebase-admin";
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 // import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
+
+import serviceAccount from "../impowered-funnel-d95202c2d478.json";
+
+admin.initializeApp({
+  credential: (admin as any).cert(serviceAccount)
+});
+
+// const db = getFirestore();
+
+const firestoreDB: FirebaseFirestore.Firestore = admin.firestore();
+
+firestoreDB.settings({
+    timestampInSnapshot: true
+})
+
+// TODO: Replace the following with your app's Firebase project configuration
+// For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
+  
 const firebaseConfig = {
     apiKey: "AIzaSyBWF5J81CI5ALkTqJvw0zg2iSRSqzweJ2E",
     authDomain: "tattooideas-10372.firebaseapp.com",
@@ -15,6 +33,8 @@ const firebaseConfig = {
     measurementId: "G-LLWR10THS6"
 };
 
+// Initialize Firebase
+export const db = firestoreDB;
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(app);
