@@ -29,6 +29,7 @@ import CustomInput from "../components/ui/form/Input";
 import Button from "../components/ui/Button";
 import RotatingImage from "../components/ui/images/RotatingImage";
 import { impoweredRequest } from "../lib/requests";
+import Image from "next/image";
 
 
 // const auth = getAuth();
@@ -172,15 +173,9 @@ export default function Enter() {
                 // Signed Up
                 const u = userCredential.user;
 
-                if (u !== null) {
-                  u.providerData.forEach((profile) => {
-                    console.log(" => Sign-in provider: " + profile);
-                    console.log("Sign-in provider: " + profile.providerId);
-                    console.log("  [Provider-specific UID]: " + profile.uid);
-                    console.log("  [Name]: " + profile.displayName);
-                    console.log("  [Email]: " + profile.email);
-                    console.log("  [Photo URL]: " + profile.photoURL);
-                  });
+                if (u === null) {
+                    throw new Error("ERROR: Likley in creating the user credentials and authorizing");
+                    
                 }
 
                 // Update user Auth Profile
@@ -191,21 +186,16 @@ export default function Enter() {
                     user?.first_name);
 
                 // Debug
-                console.log("Signed Up -- Created - FN: " + user?.first_name);
-                console.log("  [UUID]: " + u.uid);
-                console.log("  [TOKEN]: " + await u.getIdToken());
-                console.log("  [VERIFIED]: " + u.emailVerified);
-                console.log("  [VERIFIED]: " +  u.email);
-                console.log("  [NAME]: " +  u.displayName);
-                console.log("  [IS ANON]: " +  u.isAnonymous);
                 setLoading(false);
                 toggleState(false);
 
-                const response = await impoweredRequest("http://localhost:3000/api/customers",
+                const response = await impoweredRequest("http://localhost:5001/tattooideas-10372/us-central1/api/users/create",
                 "POST", {
                     "Content-Type": "application/json",
                 }, {
-                    user_uuid: u.uid
+                    user_uuid: u.uid,
+                    first_name: u.displayName,
+                    email: u.email,
                 })
             })
             .catch((er) => {
@@ -233,12 +223,7 @@ export default function Enter() {
             <div className={`${styles.full}  ${styles.col}`}>
 
                 <div className={`${styles.container} ${styles.full}`} style={{paddingBottom: "40px", position: "relative"}}>
-                    <RotatingImage images={[
-                        "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-Q8nHB6D7F0eaq3zBeBd7pqSh.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=ynTR%2B53tkgDRx%2BvmFf%2BEunKd8l1G2LsqQ7gdKW%2Blwek%3D",
-                        "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-U8gPiit4vsWxCtRpp7h1kVoX.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=JZ6Cov/DlPXKR0u0B4mZFiRCs6NEZrHXD8CeBml2iJ8%3D",
-                        "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-qm20w5xyfXpPsuZvbSIoWD5L.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=a6tITmx5HNByZloaAb7XVI3RTIyH%2B9y/C/BWpjrqky4%3D",
-                        "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-NVGEj7QPhG9HMeBVTgr8E8UC.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=w/akfWMSslMLbGb/Dh8WWBJP3wbriwzRsSdSDsRfZAk%3D"
-                    ]} interval={2000} />
+                    <Image style={{margin: "40px 0"}} src={"/logo.png"} width={60} height={60} alt={""} />
                     <Header words={tattoos} interval={1000} />
                 </div>
 

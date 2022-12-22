@@ -14,7 +14,11 @@ import logo from "../../public/logo.png"
 
 const URL = "https://cdn.shopify.com/s/files/1/0574/9263/5817/files/bigly_logo_art_file.png?v=1626380659&width=300";
 type Props = {
-    state: boolean
+    state: {
+        name: string,
+        email: string,
+        uid: string
+    },
     openState: boolean,
     toggleMenu: Dispatch<SetStateAction<boolean>>
 }
@@ -49,7 +53,7 @@ export const TopBar: FunctionComponent<Props> = ({state, openState, toggleMenu})
                     <Link href={"/history"} style={{width: "30%", padding:  "0.6rem 0.6rem 0 0", color: "rgb(174 43 43)"}}>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
                     </Link>
-                    <Link href={"/payments"} style={{width: "30%", paddingTop:  "0.5rem", color: "rgb(174 43 43)", marginLeft: "0.9rem"}}>
+                    <Link href={`/payments/${state.uid}`} style={{width: "30%", paddingTop:  "0.5rem", color: "rgb(174 43 43)", marginLeft: "0.9rem"}}>
                         <FontAwesomeIcon icon={faMoneyBill1Wave} />
                     </Link>
                 </div>

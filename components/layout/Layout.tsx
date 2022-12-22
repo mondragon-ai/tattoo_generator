@@ -6,7 +6,11 @@ import { TopBar } from "./TopBar";
 
 
 type Props = {
-    state?: boolean,
+    state?: {
+        name: string,
+        email: string,
+        uid: string
+    },
     children: ReactNode
 }
 
@@ -15,9 +19,6 @@ export const Layout: FunctionComponent<Props> = (props) => {
 
     const innerWidth = useWindowWidth()
 
-    console.log(innerWidth> 720);
-    console.log(innerWidth);
-    
     return (
         <div style={{
             minHeight: "",
@@ -51,7 +52,15 @@ export const Layout: FunctionComponent<Props> = (props) => {
                     height: "auto"
                 }}>
                 <div style={{justifyContent: "space-between"}}className={`${styles.col} ${styles.full} `}>
-                    <TopBar openState={openState} toggleMenu={toggleMenu} state={false} />
+                    <TopBar 
+                        openState={openState}
+                        toggleMenu={toggleMenu}
+                        state={props.state as {
+                            name: string,
+                            email: string,
+                            uid: string
+                        }}
+                    />
                     {props.children}
                 </div>
                 {/* <footer  className={`${styles.row} ${styles.footer}`}>`

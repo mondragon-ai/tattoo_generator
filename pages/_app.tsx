@@ -6,19 +6,26 @@ import { onAuthStateChanged } from 'firebase/auth';
 import Enter from './enter';
 import { auth } from '../lib/firebase';
 
-
 const AUTH = auth;
 
 export default function App({ Component, pageProps }: AppProps) {
 
   const [authState, setAuth] = useState(false);
+  const [authUser, setAuthUser] = useState({
+    name: "",
+    email: "",
+    uid: ""
+  })
 
   // Check status of FB User
   onAuthStateChanged(AUTH, (user) => {
-    if (user) {
-      const uid = user.uid;
+    if (user !== null) {
       setAuth(true);
-      console.log(uid)
+      setAuthUser({
+        name: user?.displayName ? user?.displayName : "",
+        email: user?.email ? user?.email : "",
+        uid: user?.uid ? user?.uid : ""
+      });
     } else {
       setAuth(false);
     }
@@ -33,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <Layout>
+    <Layout state={authUser} >
       <Component {...pageProps} />
     </Layout>
   )
