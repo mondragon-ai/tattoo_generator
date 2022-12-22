@@ -1,4 +1,4 @@
-import { db } from "../firebase"
+// import { db } from "../firebase"
 
 export const createDocumentWithID = async (
     collection: string,
@@ -11,13 +11,13 @@ export const createDocumentWithID = async (
     let response; 
 
     try {
-        response = await db
-        .collection(collection)
-        .doc(doc_uuid)
-        .set({
-            ...data,
-            id: doc_uuid
-        });
+        // response = await db
+        // .collection(collection)
+        // .doc(doc_uuid)
+        // .set({
+        //     ...data,
+        //     id: doc_uuid
+        // });
     } catch {
         text = " - Could not create document.";
         status = 400;
