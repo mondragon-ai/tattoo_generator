@@ -1,12 +1,12 @@
-// import * as admin from "firebase-admin";
+
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 // import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+// import { getStorage } from "firebase/storage";
 
 
-import serviceAccount from "../impowered-funnel-d95202c2d478.json";
+// import serviceAccount from "../impowered-funnel-d95202c2d478.json";
 
 // admin.initializeApp({
 //   credential: (admin as any).cert(serviceAccount)
@@ -40,5 +40,3 @@ export const app = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 // export const db = getFirestore()
-
-export const storage = getStorage(app);

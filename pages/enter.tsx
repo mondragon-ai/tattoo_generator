@@ -127,7 +127,7 @@ export default function Enter() {
         toggleState(true);
 
         signInWithEmailAndPassword(authUser, user?.email, user?.password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
 
@@ -135,8 +135,18 @@ export default function Enter() {
                 toggleState(false);
                 setLoading(false);
 
+                const response = await impoweredRequest("http://localhost:3000/api/customers/create",
+                "POST", {
+                    "Content-Type": "application/json",
+                }, {
+                    user_uuid: user.uid
+                });
+
+                if (!response) throw new Error("Likely couldnt create customer.");
+                
+
                 // Debug
-                console.log(user)
+                console.log(response)
             })
             .catch((err) => {
                 // Update states
@@ -191,11 +201,11 @@ export default function Enter() {
                 setLoading(false);
                 toggleState(false);
 
-                const response = await impoweredRequest("",
+                const response = await impoweredRequest("http://localhost:3000/api/customers",
                 "POST", {
-
-                },{
-
+                    "Content-Type": "application/json",
+                }, {
+                    user_uuid: u.uid
                 })
             })
             .catch((er) => {
