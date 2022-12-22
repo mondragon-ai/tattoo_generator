@@ -3,11 +3,11 @@ import {
     createUserWithEmailAndPassword,
     updateProfile,
 } from "firebase/auth";
-import { ChangeEvent, SetStateAction, useState } from "react";
+import {  SetStateAction, useState } from "react";
 import { auth } from "../lib/firebase";
 import {User} from "@firebase/auth/dist/auth-public";
-import Image from "next/image";
-import Link from "next/link";
+// import Image from "next/image";
+// import Link from "next/link";
 import styles from "../styles/Main.module.css";
 // // import styles from '../styles/Auth.module.css';
 // import {
@@ -17,12 +17,12 @@ import styles from "../styles/Main.module.css";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Fonts? 
-import { 
-    Merienda_One,
-    Saira_Extra_Condensed,
-    Anonymous_Pro,
-    Bungee_Shade,
-} from '@next/font/google'
+// import { 
+//     Merienda_One,
+//     Saira_Extra_Condensed,
+//     Anonymous_Pro,
+//     Bungee_Shade,
+// } from '@next/font/google'
 import Head from "next/head";
 import Header from "../components/ui/text/RotatingHeader";
 import CustomInput from "../components/ui/form/Input";

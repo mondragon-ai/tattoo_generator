@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { stripe } from "../../../lib/stripe";
+// import { stripe } from "../../../lib/stripe";
 import * as functions from "firebase-functions";
 // import * as admin from "firebase-admin";
 // import { createDocumentWithID } from "../../../lib/databse/firestore";
@@ -10,10 +10,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         text = "SUCCESS: Customer document created 👽",
         ok = true;
 
-    const user_uuid = req.body.user_uuid;
+    // const user_uuid = req.body.user_uuid;
 
     let payment_intent: any = null;
-    let stripe_customer_uuid = "";
+    // let stripe_customer_uuid = "";
 
     try {
         // // create Stripe customer

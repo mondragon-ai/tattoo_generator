@@ -1,9 +1,5 @@
-
 import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-// import { getStorage } from "firebase/storage";
 
 
 // import serviceAccount from "../impowered-funnel-d95202c2d478.json";
