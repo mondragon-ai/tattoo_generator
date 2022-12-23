@@ -1,20 +1,49 @@
 import Head from 'next/head'
-import main from '../styles/Main.module.css';
-import CustomInput from '../components/ui/form/Input'
-import { useState } from 'react'
-import Header from '../components/ui/text/RotatingHeader';
-import CustomSelect from '../components/ui/form/Select';
-import MosaicGrid from '../components/ui/mosaic';
-import Button from '../components/ui/Button';
-import { impoweredRequest } from '../lib/requests';
+import main from '../../styles/Main.module.css';
+import CustomInput from '../../components/ui/form/Input'
+import { FunctionComponent, useState } from 'react'
+import Header from '../../components/ui/text/RotatingHeader';
+import CustomSelect from '../../components/ui/form/Select';
+import MosaicGrid from '../../components/ui/mosaic';
+import Button from '../../components/ui/Button';
+import { impoweredRequest } from '../../lib/requests';
 import { GetServerSideProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+import { useRouter } from 'next/router';
 
 // const DEV_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api";
 const LIVE_SERVER = "https://us-central1-tattooideas-10372.cloudfunctions.net/api"
 
-export default function Home() {
 
+type Prop = {
+  users: {
+    stripe: {
+        client_secret: string,
+        uuid: string,
+        pm: string,
+        transactions: string[],
+    },
+    history: string[],
+    first_name: string,
+    last_name: string,
+    email: string,
+    billing: {
+        zip: number
+    },
+    search_credits: 0
+  }[]
+}
+
+export const Home: FunctionComponent<Prop> = ({users}) => {
+  let loading = false;
+
+  // display an error message if the users prop is not defined
+  if (!users) {
+    return <p>Error: Data not fetched</p>;
+  }
+
+  // Remove the user state and use the users prop directly
+  const [user, setUser] = useState(users[0]);
   const tattoos = ['American Traditional', 'Blackwork', 'Celtic', 'Chicano', 'Dotwork', 'Japanese', 'Neo-Traditional', 'Realistic', 'Script', 'Watercolor'];
   const [tattoo, setTattoo] = useState<{
     topic: string,
@@ -27,6 +56,7 @@ export default function Home() {
   });
 
   const [selectedOption, setSelectedOption] = useState('American Traditional');
+  const [isLoading, setLoading] = useState(loading);
 
   const [images, setImages] = useState([
     "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-Q8nHB6D7F0eaq3zBeBd7pqSh.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=ynTR%2B53tkgDRx%2BvmFf%2BEunKd8l1G2LsqQ7gdKW%2Blwek%3D",
@@ -35,43 +65,52 @@ export default function Home() {
     "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6siElBc2XZvPYoP4EQHo594G/user-GJh8gOH47p8tBQJTKztQvAWm/img-NVGEj7QPhG9HMeBVTgr8E8UC.png?st=2022-12-19T17%3A33%3A43Z&se=2022-12-19T19%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-19T12%3A38%3A03Z&ske=2022-12-20T12%3A38%3A03Z&sks=b&skv=2021-08-06&sig=w/akfWMSslMLbGb/Dh8WWBJP3wbriwzRsSdSDsRfZAk%3D"
   ]);
 
-  let [isLoading, setLoading] = useState(false);
-
   const headers = {
     "Content-Type": "application/json",
   }
+
+  const router = useRouter();
+  const {handle} = router.query;
+
   const handleClick = async () => {
-    setLoading(true);
+    loading = true;
 
     console.log(" ======> [HANDLE CLICK]");
     console.log(tattoo);
     console.log(selectedOption);
     console.log(tattoo.topic);
     console.log(LIVE_SERVER + "/users/generate");
+    console.log(user.search_credits);
+    console.log(loading);
+    console.log(true);
+    
+    setLoading(loading);
 
-    // const response = await impoweredRequest(DEV_SERVER + "/users/generate", "POST", headers, {
-    //   user_uuid: authUser.uid,
-    //   style: selectedOption,
-    //   topic: tattoo.topic,
-    // });
+    const response = await impoweredRequest(LIVE_SERVER + "/users/generate", "POST", headers, {
+      user_uuid: handle,
+      style: selectedOption,
+      topic: tattoo.topic,
+    });
   
 
-    // console.log(" ======> [IMAGE GENERATED]");
-    // console.log(response);
-    // if (response) {
-    //   const list = response?.data as [];
-    //   let img_list: string[] = [];
+    console.log(" ======> [IMAGE GENERATED]");
+    console.log(response);
+    if (response?.result) {
+      const list = response?.result as [];
+      let img_list: string[] = [];
 
 
-    //   list.forEach((i: {url: string}) => {
-    //     img_list = [
-    //       ...img_list,
-    //       i.url
-    //     ]
-    //   })
-    //   setImages(img_list)
-    // }
-    setLoading(false);
+      list.forEach((i: {url: string}) => {
+        img_list = [
+          ...img_list,
+          i.url
+        ]
+      })
+      setImages(img_list)
+      setLoading(false);
+      console.log(img_list);
+      console.log(images);
+    }
   };
 
   return (
@@ -165,3 +204,5 @@ export const getServerSideProps: GetServerSideProps = async ({params}) => {
       }
   }
 }
+
+export default Home

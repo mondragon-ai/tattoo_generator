@@ -41,7 +41,7 @@ export const TopBar: FunctionComponent<Props> = ({state, openState, toggleMenu})
                     <FontAwesomeIcon icon={faPersonThroughWindow} />
                 </div>
                 <div style={{width: "10%", paddingTop:  "0rem", color: "rgb(174 43 43)"}}>
-                    <Link href={"/"}>
+                    <Link href={`/home/${state.uid}`}>
                         <Image
                             src="/logo.png"
                             alt="imPowered Logo"
@@ -50,7 +50,7 @@ export const TopBar: FunctionComponent<Props> = ({state, openState, toggleMenu})
                     </Link>
                 </div>
                 <div style={{width: "30%",justifyContent: "flex-end"}} className={`${styles.row}`}>
-                    <Link href={"/history"} style={{width: "30%", padding:  "0.6rem 0.6rem 0 0", color: "rgb(174 43 43)"}}>
+                    <Link href={`/history/${state.uid}`} style={{width: "30%", padding:  "0.6rem 0.6rem 0 0", color: "rgb(174 43 43)"}}>
                         <FontAwesomeIcon icon={faClockRotateLeft} />
                     </Link>
                     <Link href={`/payments/${state.uid}`} style={{width: "30%", paddingTop:  "0.5rem", color: "rgb(174 43 43)", marginLeft: "0.9rem"}}>

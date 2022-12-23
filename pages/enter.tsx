@@ -35,6 +35,10 @@ import Image from "next/image";
 // const DEV_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api";
 const LIVE_SERVER = "https://us-central1-tattooideas-10372.cloudfunctions.net/api"
 
+
+// const DEV_LINK = "http://localhost:3000/";
+const LIVE_ULR = "https://tattoo-generator.vercel.app/"
+
 // const auth = getAuth();
 const updateUser = async (
     toggleState: SetStateAction<any>,
@@ -122,9 +126,6 @@ export default function Enter() {
     // async loading handling for UI
     const [loading, setLoading] = useState(false);
 
-
-    let text = "app"
-
     const signIn = (e: any) => {
         e.preventDefault();
         setLoading(true);
@@ -139,18 +140,7 @@ export default function Enter() {
                 toggleState(false);
                 setLoading(false);
 
-                const response = await impoweredRequest(LIVE_SERVER + "/customers/create",
-                "POST", {
-                    "Content-Type": "application/json",
-                }, {
-                    user_uuid: user.uid
-                });
-
-                if (!response) throw new Error("Likely couldnt create customer.");
-                
-
-                // Debug
-                console.log(response)
+                window.location.href = LIVE_ULR + "/home/" + user.uid
             })
             .catch((err) => {
                 // Update states
@@ -200,6 +190,8 @@ export default function Enter() {
                     first_name: u.displayName,
                     email: u.email,
                 })
+
+                window.location.href = LIVE_ULR + "/home/" + u.uid
             })
             .catch((er) => {
                 // Update states

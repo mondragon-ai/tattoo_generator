@@ -85,9 +85,9 @@ export const Payments: FunctionComponent<Prop> = ({users}) =>  {
         user: user,
     })
 
+    console.log(" => [DENERATE DALLE IMAGES]")
+    console.log(response)
     if (response.ok) {
-      console.log(" => [GET SECRET]")
-      console.log(response)
       setTimeout(() =>  setLoading(false), 3000);
       setUser({
         ...user,
@@ -148,13 +148,13 @@ export const Payments: FunctionComponent<Prop> = ({users}) =>  {
           {
             user?.stripe?.pm ? <>
             <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0", color: "white"}}>
-              <button className={` ${main.full} ${main.button}`} onClick={chargeCard} disabled={isLoading}>
-              {!isLoading ? "BUY CREDITS" : "Loading . . "}
+              <button className={` ${main.full} ${main.button}`} onClick={chargeCard} disabled={isLoading} style={{color: "white"}}>
+                {!isLoading ? "BUY CREDITS" : "Loading . . "}
               </button>
             </div>
             </> :  user?.stripe?.client_secret === "" ? <>
               <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0", color: "white"}}>
-                <button className={` ${main.full} ${main.button}`} onClick={getSecret} disabled={isLoading}>
+                <button className={` ${main.full} ${main.button}`} onClick={getSecret} disabled={isLoading} style={{color: "white"}}>
                   {!isLoading ? "ADD CARD" : "Loading . . "}
                 </button>
               </div>
@@ -209,7 +209,7 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
   const [isLoading, setLoading] = useState(false);
 
   // const DEV_FRONTEND_URL = "http://localhost:3000/";
-  const LVE_FRONTEND_URL = "http://localhost:3000/";
+  const LVE_FRONTEND_URL = "https://tattoo-generator.vercel.app/" ;
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -260,7 +260,7 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
     <form className={` ${main.full} ${main.col}`}>
         <PaymentElement />
         <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0", color: "white"}}>
-          <button className={` ${main.full} ${main.button}`} disabled={!stripe || isLoading} onClick={handleSubmit}>
+          <button className={` ${main.full} ${main.button}`} disabled={!stripe || isLoading} onClick={handleSubmit}  style={{color: "white"}}>
             {!isLoading ? "ADD PAYMENT" : "Loading . . ."}
           </button>
         </div>
