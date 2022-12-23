@@ -270,11 +270,11 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
   const { handle } = params as ParsedUrlQuery;
-  const DEV_SERVER = LIVE_SERVER + "/api/users";
+  const url = LIVE_SERVER + "/api/users";
 
   let result: any = null;
 
-  result = await impoweredRequest(DEV_SERVER, "POST", {
+  result = await impoweredRequest(url, "POST", {
     "Content-Type": "application/json",
   }, {user_uuid: handle});
 
