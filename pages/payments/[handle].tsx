@@ -6,6 +6,8 @@ import { GetServerSideProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { impoweredRequest } from '../../lib/requests';
 
+// const DEV_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api";
+const LIVE_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api"
 
 // stripe
 import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
@@ -74,7 +76,7 @@ export const Payments: FunctionComponent<Prop> = ({users}) =>  {
     console.log(user?.stripe?.uuid ?  user?.stripe?.uuid : "")
     console.log(user)
     console.log(" => [CHARGE CARD]")
-    const response = await impoweredRequest("http://localhost:5001/tattooideas-10372/us-central1/api/payments/charge",
+    const response = await impoweredRequest(LIVE_SERVER + "/payments/charge",
     "POST", {
         "Content-Type": "application/json",
     }, {
@@ -101,7 +103,7 @@ export const Payments: FunctionComponent<Prop> = ({users}) =>  {
   const getSecret = async () => {
 
     console.log(" => [GET SECRET] - Before")
-    const response = await impoweredRequest("http://localhost:5001/tattooideas-10372/us-central1/api/payments/client",
+    const response = await impoweredRequest(LIVE_SERVER + "/payments/client",
     "POST", {
         "Content-Type": "application/json",
     }, {
@@ -203,6 +205,7 @@ export type SetUpProp = {
 export const SetupForm = ({setUser, user}: SetUpProp) => {
   const stripe = useStripe();
   const elements = useElements();
+  const [isLoading, setLoading] = useState(false);
 
   const DEV_FRONTEND_URL = "http://localhost:3000/"
 
@@ -210,9 +213,9 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-
+    setLoading(true);
     console.log(" => [CHARGE CARD - Handle submit]")
-    const response = await impoweredRequest("http://localhost:5001/tattooideas-10372/us-central1/api/payments/charge",
+    const response = await impoweredRequest(LIVE_SERVER + "/payments/charge",
     "POST", {
         "Content-Type": "application/json",
     }, {
@@ -255,8 +258,8 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
     <form className={` ${main.full} ${main.col}`}>
         <PaymentElement />
         <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0"}}>
-          <button className={` ${main.full} ${main.button}`} disabled={!stripe} onClick={handleSubmit}>
-            ADD PAYMENT
+          <button className={` ${main.full} ${main.button}`} disabled={!stripe || isLoading} onClick={handleSubmit}>
+            {!isLoading ? "ADD PAYMENT" : "Loading . . ."}
           </button>
         </div>
       {/* Show error message to your customers */}
@@ -267,8 +270,7 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
   const { handle } = params as ParsedUrlQuery;
-  // const LIVE_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api/users";
-  const DEV_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api/users";
+  const DEV_SERVER = LIVE_SERVER + "/api/users";
 
   let result: any = null;
 

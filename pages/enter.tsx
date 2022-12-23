@@ -32,6 +32,9 @@ import { impoweredRequest } from "../lib/requests";
 import Image from "next/image";
 
 
+// const DEV_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api";
+const LIVE_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api"
+
 // const auth = getAuth();
 const updateUser = async (
     toggleState: SetStateAction<any>,
@@ -136,7 +139,7 @@ export default function Enter() {
                 toggleState(false);
                 setLoading(false);
 
-                const response = await impoweredRequest("http://localhost:3000/api/customers/create",
+                const response = await impoweredRequest(LIVE_SERVER + "/customers/create",
                 "POST", {
                     "Content-Type": "application/json",
                 }, {
@@ -189,7 +192,7 @@ export default function Enter() {
                 setLoading(false);
                 toggleState(false);
 
-                await impoweredRequest("http://localhost:5001/tattooideas-10372/us-central1/api/users/create",
+                await impoweredRequest(LIVE_SERVER + "/users/create",
                 "POST", {
                     "Content-Type": "application/json",
                 }, {
