@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Layout state={authUser} >
-      <Component {...pageProps} />
+      <Component {...pageProps}  state={authUser} />
     </Layout>
   )
 }

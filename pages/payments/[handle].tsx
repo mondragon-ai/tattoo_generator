@@ -101,7 +101,7 @@ export const Payments: FunctionComponent<Prop> = ({users}) =>  {
   }
 
   const getSecret = async () => {
-
+    setLoading(true)
     console.log(" => [GET SECRET] - Before")
     const response = await impoweredRequest(LIVE_SERVER + "/payments/client",
     "POST", {
@@ -113,6 +113,7 @@ export const Payments: FunctionComponent<Prop> = ({users}) =>  {
     if (response.ok) {
       console.log(" => [GET SECRET]")
       console.log(response)
+      setLoading(false)
       setUser({
         ...user,
         stripe: {
@@ -146,13 +147,13 @@ export const Payments: FunctionComponent<Prop> = ({users}) =>  {
         <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0"}}>
           {
             user?.stripe?.pm ? <>
-            <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0"}}>
+            <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0", color: "white"}}>
               <button className={` ${main.full} ${main.button}`} onClick={chargeCard} disabled={isLoading}>
               {!isLoading ? "BUY CREDITS" : "Loading . . "}
               </button>
             </div>
             </> :  user?.stripe?.client_secret === "" ? <>
-              <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0"}}>
+              <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0", color: "white"}}>
                 <button className={` ${main.full} ${main.button}`} onClick={getSecret} disabled={isLoading}>
                   {!isLoading ? "ADD CARD" : "Loading . . "}
                 </button>
@@ -207,7 +208,8 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
   const elements = useElements();
   const [isLoading, setLoading] = useState(false);
 
-  const DEV_FRONTEND_URL = "http://localhost:3000/"
+  // const DEV_FRONTEND_URL = "http://localhost:3000/";
+  const LVE_FRONTEND_URL = "http://localhost:3000/";
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -241,7 +243,7 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
     const {error} = await stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: DEV_FRONTEND_URL
+        return_url: LVE_FRONTEND_URL
       },
     });
 
@@ -257,7 +259,7 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
   return (
     <form className={` ${main.full} ${main.col}`}>
         <PaymentElement />
-        <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0"}}>
+        <div className={` ${main.full} ${main.col}`} style={{height: "auto", padding: "2rem 0", color: "white"}}>
           <button className={` ${main.full} ${main.button}`} disabled={!stripe || isLoading} onClick={handleSubmit}>
             {!isLoading ? "ADD PAYMENT" : "Loading . . ."}
           </button>
