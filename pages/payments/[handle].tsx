@@ -7,7 +7,7 @@ import { ParsedUrlQuery } from 'querystring';
 import { impoweredRequest } from '../../lib/requests';
 
 // const DEV_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api";
-const LIVE_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api"
+const LIVE_SERVER = "https://us-central1-tattooideas-10372.cloudfunctions.net/api"
 
 // stripe
 import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
