@@ -270,7 +270,7 @@ export const SetupForm = ({setUser, user}: SetUpProp) => {
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
   const { handle } = params as ParsedUrlQuery;
-  const url = LIVE_SERVER + "/api/users";
+  const url = LIVE_SERVER + "/users";
 
   let result: any = null;
 
