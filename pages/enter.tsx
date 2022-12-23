@@ -189,7 +189,7 @@ export default function Enter() {
                 setLoading(false);
                 toggleState(false);
 
-                const response = await impoweredRequest("http://localhost:5001/tattooideas-10372/us-central1/api/users/create",
+                await impoweredRequest("http://localhost:5001/tattooideas-10372/us-central1/api/users/create",
                 "POST", {
                     "Content-Type": "application/json",
                 }, {

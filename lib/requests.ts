@@ -4,6 +4,14 @@ export const impoweredRequest = async (
     headers: {},
     data: any
 ) => {
+    console.log(" => [URL]")
+    console.log(url)
+    console.log(" => [METHOD]")
+    console.log(method)
+    console.log(" => [HEADERS]")
+    console.log(headers)
+    console.log(" => [DATA]")
+    console.log(data)
 
     let result = null;
 
@@ -26,8 +34,9 @@ export const impoweredRequest = async (
         if (response.ok) {
             result = await response.json();
         } else {
-            result = {message: "Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system."}
+            // result = {message: "Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system."}
             alert("ERROR: " + response.status)
+            console.log(await response.text())
             throw new Error(" - Fetch Error");
         }
     }
