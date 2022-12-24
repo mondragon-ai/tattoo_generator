@@ -86,30 +86,37 @@ export const Home: FunctionComponent<Prop> = ({users}) => {
     
     setLoading(loading);
 
-    const response = await impoweredRequest(LIVE_SERVER + "/users/generate", "POST", headers, {
-      user_uuid: handle,
-      style: selectedOption,
-      topic: tattoo.topic,
-    });
+    if (user.search_credits !== 0 || user.search_credits > 0) {
+      const response = await impoweredRequest(LIVE_SERVER + "/users/generate", "POST", headers, {
+        user_uuid: handle,
+        style: selectedOption,
+        topic: tattoo.topic,
+      });
+
+      console.log(" ======> [IMAGE GENERATED]");
+      console.log(response);
+      if (response?.result) {
+        const list = response?.result as [];
+        let img_list: string[] = [];
   
+  
+        list.forEach((i: {url: string}) => {
+          img_list = [
+            ...img_list,
+            i.url
+          ]
+        })
+        setImages(img_list)
+        setLoading(false);
+        console.log(img_list);
+        console.log(images);
+      }
 
-    console.log(" ======> [IMAGE GENERATED]");
-    console.log(response);
-    if (response?.result) {
-      const list = response?.result as [];
-      let img_list: string[] = [];
-
-
-      list.forEach((i: {url: string}) => {
-        img_list = [
-          ...img_list,
-          i.url
-        ]
-      })
-      setImages(img_list)
+    } else {
+      console.log(" ======> [CREDIT ISSUE] 🚨");
       setLoading(false);
-      console.log(img_list);
-      console.log(images);
+      setImages([]);
+      alert("Buy more credits!");
     }
   };
 

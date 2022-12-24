@@ -12,8 +12,8 @@ import { impoweredRequest } from '../../lib/requests';
 import { GetServerSideProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
-// const DEV_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api";
-const LIVE_SERVER = "https://us-central1-tattooideas-10372.cloudfunctions.net/api"
+const DEV_SERVER = "http://localhost:5001/tattooideas-10372/us-central1/api";
+// const LIVE_SERVER = "https://us-central1-tattooideas-10372.cloudfunctions.net/api"
 
 
 type Prop = {
@@ -93,7 +93,7 @@ export const History: FunctionComponent<Prop> = ({users}) => {
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
   const { handle } = params as ParsedUrlQuery;
-  const url = LIVE_SERVER + "/users";
+  const url = DEV_SERVER + "/users";
 
   let result: any = null;
 
